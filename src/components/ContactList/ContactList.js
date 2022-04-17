@@ -4,7 +4,6 @@ import ContactListItem from '../ContactListItem/ContactListItem';
 
 const ContactList = ({contacts}) => {
 
-  console.log('contactaFrom', contacts);
   return (
     <div>
       <ul>

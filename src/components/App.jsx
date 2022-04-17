@@ -7,9 +7,10 @@ import ContactFilter from './ContactFilter/ContactFilter'
 
 const shortid = require('shortid');
 
+
 function App() {
   const filters = useSelector(state => state.filter);
-  const contacts = useSelector(state => state.contact)
+  const contacts = useSelector(state => state.contact);
 
   const dispatch = useDispatch();
 
@@ -30,12 +31,13 @@ function App() {
           name: data.name,
           number: data.number
       }))
+     
   }
 }
 
 const normalizeFilter = filters.toLowerCase();
 const filterContacts = contacts.filter(contact => contact.name.toLowerCase().includes(normalizeFilter));
-  console.log(filterContacts)
+ // console.log(filterContacts)
    return (
        <section>
         <h1>Phonebook</h1>
