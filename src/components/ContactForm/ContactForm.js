@@ -1,10 +1,38 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
+import { useSelector, useDispatch } from 'react-redux';
+import { addContact} from '../../redux/contactSlice'
 const shortid = require("shortid");
 
- function  ContactForm({onSubmit}){ 
+
+ function  ContactForm(){ 
    const [name, setName] = useState('');
    const [number, setNumber] = useState('');
+
+  
+  const contacts = useSelector(state => state.contact);
+  const dispatch = useDispatch();
+
+  const onSaveContactClicked = (data) => {
+  const message = `${data.name} is alredy in contacts`;
+  const findName = contacts.find(contact => contact.name.toLowerCase() === data.name.toLowerCase());
+  const findNumber = contacts.find(contact => contact.number === data.number);
+
+  if (findName || findNumber !== undefined) {
+    alert(message);
+    return
+  };
+  
+  if (contacts) {
+    dispatch(
+      addContact({
+          id: shortid.generate(),
+          name: data.name,
+          number: data.number
+      }))
+     
+  }
+}
 
   const nameInputId = shortid.generate();
   const numberInputId = shortid.generate();
@@ -18,7 +46,7 @@ const shortid = require("shortid");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit({name, number});
+    onSaveContactClicked ({name, number});
     reset();
   };
 
@@ -67,6 +95,6 @@ const shortid = require("shortid");
 export default ContactForm;
 
   //========================== propTypes ===================
-  ContactForm.propTypes = {
+ /* ContactForm.propTypes = {
     onSubmit: PropTypes.func.isRequired,
-  };
+  };*/
